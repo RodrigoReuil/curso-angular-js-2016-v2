@@ -4,6 +4,7 @@
 
 ## Material
 - [ng-book](https://www.ng-book.com/)
+- [Chrome Dev Tools](http://discover-devtools.codeschool.com/)
 
 ## Tools
 - [http-server](https://github.com/indexzero/http-server)
