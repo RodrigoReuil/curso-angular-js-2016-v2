@@ -5,6 +5,7 @@
 ## Material
 - [ng-book](https://www.ng-book.com/)
 - [Chrome Dev Tools](http://discover-devtools.codeschool.com/)
+- [Event Bubling](http://www.quirksmode.org/js/events_order.html)
 
 ## Tools
 - [http-server](https://github.com/indexzero/http-server)
