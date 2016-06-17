@@ -7,13 +7,35 @@
       angular
         .module('calcApp', [])
         .config(function(){})
-        .controller('MainCtrl', function($scope, $rootScope){
-          $scope.resultado = "";
-          $scope.botones = "1234567890-+*/=C".split("");
-          $scope.calcular = function(n){
-            console.log(n);
-          }
+        .controller('MainCtrl', function($scope,
+          $rootScope, $log){
          })
+        .directive('calculadora', function($log){
+
+
+          return {
+            templateUrl: "./calc-directive.html",
+            restrict: 'EA',
+            scope: {},
+            link: function(scope, element, attrs){
+              scope.botones = "1234567890-+*/=C".split("");
+              scope.resultado = '';
+              scope.calcular = function(n){
+                $log.log(n);
+                if(n === '=') {
+                  if (scope.resultado !== '')
+                    scope.resultado = scope.$eval(scope.resultado);
+                } else if ( n === 'C') {
+                  scope.resultado = '';
+                } else {
+                  scope.resultado += n;
+                }
+              }
+            }
+          }
+
+        })
+        .service('CalcServ', function(){})
         .run(function($rootScope){
           $rootScope.mensaje = "ANGULARJS";
         });
@@ -30,21 +52,19 @@
       float: left;
     }
     ul li.limpiar {
-      color: red;
+      background-red: red;
       clear: both;
     }
     </style>
   </head>
   <body>
-    <div ng-controller="MainCtrl">
-      <input type="text" ng-model="resultado" />
-      <ul>
-        <li ng-repeat="n in botones"
-          ng-class="{ limpiar: ($index+1)%3 === 0 }"
-          >
-          <button ng-click="calcular(n)">{{n}}</button>
-        </li>
-      </ul>
+    <div calculadora>
+    Texto por defecto
     </div>
+    <calculadora data-moneda="usd"></calculadora>
+    <!--
+    <div ng-controller="MainCtrl">
+    </div>
+    -->
   </body>
 </html>
