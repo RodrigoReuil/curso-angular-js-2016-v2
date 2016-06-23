@@ -7,10 +7,11 @@
       angular
         .module('calcApp', [])
         .config(function(){})
-        .controller('MainCtrl', function($scope,
-          $rootScope, $log){
+        .controller('MainCtrl', function($scope, $rootScope, $log){
+
+
          })
-        .directive('calculadora', function($log){
+        .directive('calculadora', function($log, CalcServ){
 
 
           return {
@@ -20,11 +21,18 @@
             link: function(scope, element, attrs){
               scope.botones = "1234567890-+*/=C".split("");
               scope.resultado = '';
+
+              scope.$watch('resultado', function(oldVal, newVal){
+                $log.log("resultado cambio...", scope.resultado);
+                //LS.set('res', scope.resultado);
+              });
+
+
               scope.calcular = function(n){
                 $log.log(n);
                 if(n === '=') {
                   if (scope.resultado !== '')
-                    scope.resultado = scope.$eval(scope.resultado);
+                    scope.resultado = CalcServ.evaluar(scope.resultado);
                 } else if ( n === 'C') {
                   scope.resultado = '';
                 } else {
@@ -35,7 +43,16 @@
           }
 
         })
-        .service('CalcServ', function(){})
+        .factory('CalcServ', function(){
+          return {
+            evaluar: function(expr){
+              return eval(expr);
+            },
+            alcuadrado : function(n){
+              return n*n;
+            }
+          };
+        })
         .run(function($rootScope){
           $rootScope.mensaje = "ANGULARJS";
         });
