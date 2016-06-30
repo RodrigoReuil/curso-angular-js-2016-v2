@@ -8,7 +8,7 @@
  * Controller of the spaApp
  */
 angular.module('spaApp')
-  .controller('ProveedoresCtrl', function ($scope, provServ) {
+  .controller('ProveedoresCtrl', function ($scope, provServ, toastr) {
 
     $scope.proveedores = [];
     $scope.prov = {};
@@ -20,7 +20,7 @@ angular.module('spaApp')
     $scope.altaProveedor = function() {
       // Crear 1 proveedor
       provServ.create($scope.prov).then(function(res){
-        alert("Guardado exitosamente");
+        toastr.success('Alta', 'Proveedor guardado!');
         $scope.prov.nombre = '';
       });
     }
