@@ -2,12 +2,33 @@
 <html ng-app="calcApp">
   <head>
     <title>Calculadora</title>
+		<link href="./bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+		<link href="./bower_components/font-awesome/css/font-awesome.css" rel="stylesheet" />
+		<link href="./bower_components/animate.css/animate.css" rel="stylesheet" />
     <script src="./bower_components/angular/angular.js"></script>
+    <script src="./bower_components/angular-route/angular-route.js"></script>
     <script>
       angular
-        .module('calcApp', [])
-        .config(function(){})
+        .module('calcApp', ['ngRoute'])
+        .config(function($routeProvider){
+           $routeProvider
+						.when('/', {
+							templateUrl: '/main.html',
+							controller: 'MainCtrl'
+						})
+						.when('/about', {
+							templateUrl: '/about.html',
+							controller: 'AboutCtrl'
+						})
+						.otherwise({
+							redirectTo: '/'
+						});
+        })
         .controller('MainCtrl', function($scope, $rootScope, $log){
+
+
+         })
+        .controller('AboutCtrl', function($scope, $rootScope, $log){
 
 
          })
@@ -55,6 +76,16 @@
         })
         .run(function($rootScope){
           $rootScope.mensaje = "ANGULARJS";
+
+
+					$rootScope.$on('$routeChangeStart', function () {
+							console.log('$routeChangeStart');
+							//show loading gif
+							$timeout(function(){
+								$rootScope.layout.loading = true;
+							});
+					});
+
         });
     </script>
     <style>
@@ -75,10 +106,13 @@
     </style>
   </head>
   <body>
-    <div calculadora>
-    Texto por defecto
-    </div>
-    <calculadora data-moneda="usd"></calculadora>
+
+		<ul>
+			<li><a ng-href="#/">Inicio</a></li>
+			<li><a ng-href="#/about">About</a></li>
+		</ul>
+
+		<div ng-view> Cargando... </div>
     <!--
     <div ng-controller="MainCtrl">
     </div>
