@@ -13,9 +13,13 @@ angular.module('spaApp')
     $scope.proveedores = [];
     $scope.prov = {};
 
-    provServ.all().then(function(res){
-      $scope.proveedores = res;
-    });
+		$scope.buscarProveedores = function(){
+			provServ.all().then(function(res){
+				$scope.proveedores = res;
+			});
+		}
+
+		$scope.buscarProveedores();
 
     $scope.altaProveedor = function() {
       // Crear 1 proveedor
@@ -24,6 +28,14 @@ angular.module('spaApp')
         $scope.prov.nombre = '';
       });
     }
+
+    $scope.borrarProveedor = function(id) {
+      provServ.delete(id).then(function(res){
+        toastr.warning('Baja', 'Proveedor borrado!');
+				$scope.buscarProveedores();
+      });
+    }
+
 
     this.awesomeThings = [
       'HTML5 Boilerplate',
