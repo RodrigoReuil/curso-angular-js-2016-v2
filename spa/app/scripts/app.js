@@ -16,6 +16,7 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
+		'adf', 'adf.structures.base', 'adf.widget.clock',
     'toastr'
   ])
   .config(function ($routeProvider) {
